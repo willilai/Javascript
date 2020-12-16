@@ -55,13 +55,13 @@ function drawAll()
       lives -= 1;
     }
 
+    if (lives == 0)
+      {
+        return;
+      }
+
   // Draw the line
   context.clearRect(0, 0, canvas.width, canvas.height);
-
-  if (lives == 0)
-    {
-      return;
-    }
 
     context.font = "20px Arial";
     context.fillText("Score: " + score, 10, 30);

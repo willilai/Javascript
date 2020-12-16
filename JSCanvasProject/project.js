@@ -43,25 +43,23 @@ function drawAll()
       circleVel[1] *= -1;
       circleVel[1] += Math.random() - 0.5;
     }
-  if ((circlePos[1] + circlePos[2] > rectPos[1]) && ((circlePos[0] > rectPos[0]) && (circlePos[0] < (rectPos[0] + rectPos[2]))))
+  if ((circlePos[1] + circlePos[2] > rectPos[1]) && ((circlePos[0] > rectPos[0]) && (circlePos[0] < (rectPos[0] + rectPos[2]))) && circlePos[1] + circleVel[1] + circlePos[2] < rectPos[1])
     {
-      circleVel[1] = (circleVel[1] + 0.75) * (-1);
+      circleVel[1] = (circleVel[1] + 0.5) * (-1);
       circleVel[1] += Math.random() - 0.5;
       score += 1;
     }
   if (circlePos[1] + circlePos[2] > canvas.height)
     {
-      score = 0;
       lives -= 1;
     }
 
-    if (lives == 0)
-      {
-        return;
-      }
+
 
   // Draw the line
   context.clearRect(0, 0, canvas.width, canvas.height);
+
+
 
     context.font = "20px Arial";
     context.fillText("Score: " + score, 10, 30);
@@ -79,7 +77,11 @@ function drawAll()
   context.fillStyle = "blue";
   context.fill();
   context.stroke();
-  console.log(score);
+
+  if (lives == 0)
+    {
+      return;
+    }
 
   // Loop the animation to the next frame.
   window.requestAnimationFrame(drawAll);
@@ -105,7 +107,7 @@ var rectPos = [canvas.width / 2, canvas.height * 0.95, 100, 10];
 
 // First two coordinates are x,y of center, last is radius
 var circlePos = [50, 50, 25];
-var circleVel = [8, 8, 0];
+var circleVel = [1, 1, 0];
 
 var score = 0;
 var lives = 3;

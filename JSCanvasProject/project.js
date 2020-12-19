@@ -1,16 +1,3 @@
-function applyVelocity (position, velocity) {
-  /*
-    Parameters: Position and Velocity of an object
-      Assumption: Velocity list has same length as position list.
-    Returns: None, but modifies global variables
-    Purpose: Apply velocity to position, moving the object.
-  */
-  var i = 0;
-  for (i = 0; i < position.length; i++) {
-    position[i] += velocity[i];
-  }
-}
-
 function mouseMoved (event) {
   /*
     Parameters: event object, which contains information about the event
@@ -18,8 +5,7 @@ function mouseMoved (event) {
     Returns: None, but modifies global variables which track response to event.
     Purpose: Make the animation respond to keys being pressed.
   */
-  // One of the attributes of the event object is 'which,' contains the key
-  //   that was pressed to trigger the event listener.
+
   rectPos[0] = event.x - 50;
 }
 function drawAll()
@@ -29,55 +15,69 @@ function drawAll()
   Returns: None, but it calls itself to cycle to the next frame
 */
 {
-  // calculateFPS();
-
+  circle.applyVelocity()
+  circle.bouncecheck();
+  /*
+  // applies the velocity tp the ball
   applyVelocity(circlePos, circleVel);
 
-  if ((circlePos[0] + circlePos[2] > canvas.width) || (circlePos[0] - circlePos[2] < 0))
+  // if the ball hits the right wall, make it bounce
+  if (circlePos[0] + circlePos[2] >= canvas.width)
     {
+      circlePos[0] = canvas.width - circlePos[2];
       circleVel[0] *= -1;
       circleVel[0] += Math.random() - 0.5;
     }
-  if ((circlePos[1] + circlePos[2] > canvas.height) || (circlePos[1] - circlePos[2] < 0))
+  // if the ball hits the left wall, make it bounce
+  if (circlePos[0] - circlePos[2] <= 0)
     {
+      circlePos[0] = circlePos[2];
+      circleVel[0] *= -1;
+      circleVel[0] += Math.random() - 0.5;
+    }
+  // if the ball his the bottom, make it bounce and lose a life
+  if (circlePos[1] + circlePos[2] >= canvas.height)
+    {
+      circlePos[1] = canvas.height - circlePos[2];
+      circleVel[1] *= -1;
+      circleVel[1] += Math.random() - 0.5;
+      lives -= 1;
+    }
+  // if the ball hits the top right, make it bounce
+  if (circlePos[1] - circlePos[2] <= 0)
+    {
+      circlePos[1] = circlePos[2];
       circleVel[1] *= -1;
       circleVel[1] += Math.random() - 0.5;
     }
-  if ((circlePos[1] + circlePos[2] > rectPos[1]) && ((circlePos[0] > rectPos[0]) && (circlePos[0] < (rectPos[0] + rectPos[2]))) && circlePos[1] + circleVel[1] + circlePos[2] < rectPos[1])
+  // if the ball hits the rectangle, make it bounce
+  if ((circlePos[1] + circlePos[2] >= rectPos[1]) && ((circlePos[0] >= rectPos[0]) && (circlePos[0] <= (rectPos[0] + rectPos[2]))))
     {
+      circlePos[1] = rectPos[1] - circlePos[2];
       circleVel[1] = (circleVel[1] + 0.5) * (-1);
       circleVel[1] += Math.random() - 0.5;
       score += 1;
     }
-  if (circlePos[1] + circlePos[2] > canvas.height)
-    {
-      lives -= 1;
-    }
+    */
 
-
-
-  // Draw the line
+  // clears the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
 
+  // display the score and lives left
+  context.font = "20px Arial";
+  context.fillText("Score: " + score, 10, 30);
+  context.fillText("Lives: " + lives, 10, 60)
 
-
-    context.font = "20px Arial";
-    context.fillText("Score: " + score, 10, 30);
-    context.fillText("Lives: " + lives, 10, 60)
-
-  context.lineWidth = 3;
-  context.lineCap = 'round';
+  // draws the rectangle
   context.beginPath();
   context.rect(rectPos[0], rectPos[1], rectPos[2], rectPos[3]);
   context.fillStyle = "red";
   context.fill();
   context.stroke();
-  context.beginPath();
-  context.arc(circlePos[0], circlePos[1], circlePos[2], 0, 2*Math.PI);
-  context.fillStyle = "blue";
-  context.fill();
-  context.stroke();
+  // draws the circle
+  circle.draw();
 
+  // if they run out of lives, end the game
   if (lives == 0)
     {
       return;
@@ -94,7 +94,6 @@ console.log("Window is %d by %d", windowWidth, windowHeight);
 
 // Get the canvas, set the width and height from the window
 canvas = document.getElementById("mainCanvas");
-// I found that - 20 worked well for me, YMMV
 canvas.width = windowWidth - 20;
 canvas.height = windowHeight - 20;
 canvas.style.border = "1px solid black";
@@ -106,9 +105,8 @@ context = canvas.getContext("2d");
 var rectPos = [canvas.width / 2, canvas.height * 0.95, 100, 10];
 
 // First two coordinates are x,y of center, last is radius
-var circlePos = [50, 50, 25];
-var circleVel = [1, 1, 0];
-
+circle = new Circle(50, 50, 25, context);
+// sets up the score and lives left
 var score = 0;
 var lives = 3;
 

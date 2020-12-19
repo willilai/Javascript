@@ -16,7 +16,7 @@ function drawAll()
 */
 {
   circle.applyVelocity()
-  circle.bouncecheck();
+  circle.bounceCheck();
   /*
   // applies the velocity tp the ball
   applyVelocity(circlePos, circleVel);
@@ -106,10 +106,10 @@ var rectPos = [canvas.width / 2, canvas.height * 0.95, 100, 10];
 
 // First two coordinates are x,y of center, last is radius
 circle = new Circle(50, 50, 25, context);
+
 // sets up the score and lives left
 var score = 0;
 var lives = 3;
-
 
 // Set up event listener for when user presses a key down.
 // It then calls the function myKeyDown, passing it an event object.

@@ -6,16 +6,14 @@ class Circle {
     this.radius = r;
     this.vel = [8, 8];
   }
-
-  ///////////////// Lots of getters and setters
+/*
+  // Lots of getters and setters
   get center() {return this.center;}
   set center(newCenter) {this.center = newCenter;}
 
   get vel() {return this.vel;}
   set vel(newVel) {this.vel = newVel}
-
-  ////////////////// Custom methods
-
+*/
   applyVelocity() {
     // Add velocity to position in each coordinate
     this.center[0] += this.vel[0];
@@ -55,9 +53,10 @@ class Circle {
         this.vel[1] += Math.random() - 0.5;
       }
     // if the ball hits the rectangle, make it bounce
-    if ((this.center[1] + this.center[2] >= rectPos[1]) && ((this.center[0] >= rectPos[0]) && (this.center[0] <= (rectPos[0] + rectPos[2]))))
+    if ((this.center[1] + this.radius >= rectPos[1]) && ((this.center[0] >= rectPos[0]) && (this.center[0] <= (rectPos[0] + rectPos[2]))))
       {
-        this.center[1] = rectPos[1] - this.center[2];
+        console.log("in");
+        this.center[1] = rectPos[1] - this.radius;
         this.vel[1] = (this.vel[1] + 0.5) * (-1);
         this.vel[1] += Math.random() - 0.5;
         score += 1;
@@ -65,6 +64,7 @@ class Circle {
   }
 
   draw() {
+    // draws the circle
     context.beginPath();
     context.arc(this.center[0], this.center[1], this.radius, 0, 2*Math.PI);
     context.fillStyle = "blue";

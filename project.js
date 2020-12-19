@@ -17,48 +17,6 @@ function drawAll()
 {
   circle.applyVelocity()
   circle.bounceCheck();
-  /*
-  // applies the velocity tp the ball
-  applyVelocity(circlePos, circleVel);
-
-  // if the ball hits the right wall, make it bounce
-  if (circlePos[0] + circlePos[2] >= canvas.width)
-    {
-      circlePos[0] = canvas.width - circlePos[2];
-      circleVel[0] *= -1;
-      circleVel[0] += Math.random() - 0.5;
-    }
-  // if the ball hits the left wall, make it bounce
-  if (circlePos[0] - circlePos[2] <= 0)
-    {
-      circlePos[0] = circlePos[2];
-      circleVel[0] *= -1;
-      circleVel[0] += Math.random() - 0.5;
-    }
-  // if the ball his the bottom, make it bounce and lose a life
-  if (circlePos[1] + circlePos[2] >= canvas.height)
-    {
-      circlePos[1] = canvas.height - circlePos[2];
-      circleVel[1] *= -1;
-      circleVel[1] += Math.random() - 0.5;
-      lives -= 1;
-    }
-  // if the ball hits the top right, make it bounce
-  if (circlePos[1] - circlePos[2] <= 0)
-    {
-      circlePos[1] = circlePos[2];
-      circleVel[1] *= -1;
-      circleVel[1] += Math.random() - 0.5;
-    }
-  // if the ball hits the rectangle, make it bounce
-  if ((circlePos[1] + circlePos[2] >= rectPos[1]) && ((circlePos[0] >= rectPos[0]) && (circlePos[0] <= (rectPos[0] + rectPos[2]))))
-    {
-      circlePos[1] = rectPos[1] - circlePos[2];
-      circleVel[1] = (circleVel[1] + 0.5) * (-1);
-      circleVel[1] += Math.random() - 0.5;
-      score += 1;
-    }
-    */
 
   // clears the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
